@@ -8,19 +8,23 @@ export default class TodoListItem extends Component {
     important: false,
   };
   onLabelClick = () => {
-    this.setState({
-      done: true,
+    this.setState(({done}) => {
+      return {
+        done: !done,
+      };
     });
   };
 
   onMarkImportant = () => {
-    this.setState({
-      important: true,
-    })
-  }
-  
+    this.setState(({important}) => {
+      return {
+        important: !important,
+      };
+    });
+  };
+
   render() {
-    const { label } = this.props;
+    const { label, onDelete } = this.props;
     const { done, important } = this.state;
     const style = {
       color: important ? "steelblue" : "black",
@@ -33,7 +37,7 @@ export default class TodoListItem extends Component {
     }
 
     if (important) {
-      classNames += ' important';
+      classNames += " important";
     }
 
     return (
@@ -53,6 +57,7 @@ export default class TodoListItem extends Component {
         <button
           type="button"
           className="btn btn-outline-danger btn-sm float-right"
+          onClick={onDelete}
         >
           <i className="fa fa-trash-o" />
         </button>
